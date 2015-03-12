@@ -3,8 +3,7 @@
 
     SourcePawn SteamWorks is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    the Free Software Foundation, as per version 3 of the License.
 
     SourcePawn SteamWorks is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -201,6 +200,39 @@ static cell_t sm_GetClientSteamID(IPluginContext *pContext, const cell_t *params
 	return numBytes;
 }
 
+static cell_t sm_GetUserGroupStatus(IPluginContext *pContext, const cell_t *params)
+{
+	ISteamGameServer *pServer = GetGSPointer();
+
+	if (pServer == NULL)
+	{
+		return false;
+	}
+
+	int client = gamehelpers->ReferenceToIndex(params[1]);
+	IGamePlayer *pPlayer = playerhelpers->GetGamePlayer(client); /* Man, including GameHelpers and PlayerHelpers for this native :(. */
+	if (pPlayer == NULL || pPlayer->IsConnected() == false)
+	{
+		return pContext->ThrowNativeError("Client index %d is invalid", params[1]);
+	}
+
+	CSteamID checkid = CreateCommonCSteamID(pPlayer, params);
+	return pServer->RequestUserGroupStatus(checkid, CSteamID(params[2], k_EUniversePublic, k_EAccountTypeClan));
+}
+
+static cell_t sm_GetUserGroupStatusAuthID(IPluginContext *pContext, const cell_t *params)
+{
+	ISteamGameServer *pServer = GetGSPointer();
+
+	if (pServer == NULL)
+	{
+		return false;
+	}
+
+	CSteamID checkid = CreateCommonCSteamID(params[1], params, 3, 4);
+	return pServer->RequestUserGroupStatus(checkid, CSteamID(params[2], k_EUniversePublic, k_EAccountTypeClan));
+}
+
 static sp_nativeinfo_t gsnatives[] = {
 	{"SteamWorks_IsVACEnabled",				sm_IsVACEnabled},
 	{"SteamWorks_GetPublicIP",				sm_GetPublicIP},
@@ -213,6 +245,8 @@ static sp_nativeinfo_t gsnatives[] = {
 	{"SteamWorks_ForceHeartbeat",				sm_ForceHeartbeat},
 	{"SteamWorks_HasLicenseForApp",			sm_UserHasLicenseForApp},
 	{"SteamWorks_GetClientSteamID",			sm_GetClientSteamID},
+	{"SteamWorks_GetUserGroupStatus",			sm_GetUserGroupStatus},
+	{"SteamWorks_GetUserGroupStatusAuthID",			sm_GetUserGroupStatusAuthID},
 	{NULL,											NULL}
 };
 

@@ -18,18 +18,12 @@
 
 #pragma once
 #include "smsdk_ext.h"
-#include "steam_gameserver.h"
-#include "CDetour/detours.h"
 
-class SteamWorksGSDetours
+class SteamWorksMemUtils
 {
 	public:
-		SteamWorksGSDetours();
-		~SteamWorksGSDetours();
-		
-	private:
-		CDetour *m_pSafeInitDetour;
-		CDetour *m_pShutdownDetour;
+		void *ResolveSymbolInt(void *pBase, const char *pSymbol);
+		size_t GetOffsetFromVTable(void *pInterface, void *pToFindFunc, const char *pClassSig = NULL, size_t version = 0);
 };
 
 #include "extension.h"

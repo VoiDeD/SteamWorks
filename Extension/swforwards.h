@@ -3,8 +3,7 @@
 
     SourcePawn SteamWorks is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    the Free Software Foundation, as per version 3 of the License.
 
     SourcePawn SteamWorks is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,6 +38,7 @@ class SteamWorksForwards
 		STEAM_GAMESERVER_CALLBACK(SteamWorksForwards, OnSteamServersConnected, SteamServersConnected_t, m_CallbackSteamConnected);
 		STEAM_GAMESERVER_CALLBACK(SteamWorksForwards, OnSteamServersConnectFailure, SteamServerConnectFailure_t, m_CallbackSteamConnectFailure);
 		STEAM_GAMESERVER_CALLBACK(SteamWorksForwards, OnSteamServersDisconnected, SteamServersDisconnected_t, m_CallbackSteamDisconnected);
+		STEAM_GAMESERVER_CALLBACK(SteamWorksForwards, OnGroupStatusResult, GSClientGroupStatus_t, m_CallbackGroupStatus);
 	
 	private:
 		IForward *pFOVC;	/* Forward On Validate Client */
@@ -46,4 +46,5 @@ class SteamWorksForwards
 		IForward *pFOSSC;	/* Forward On Steam Servers Connected */
 		IForward *pFOSSCF;	/* Forward On Steam Servers Connect Failure */
 		IForward *pFOSSD;	/* Forward On Steam Servers Disconnected */
+		IForward *pFOCGS;	/* Forward On Client Group Status */
 };

@@ -3,8 +3,7 @@
 
     SourcePawn SteamWorks is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    the Free Software Foundation, as per version 3 of the License.
 
     SourcePawn SteamWorks is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -76,7 +75,7 @@ void SteamWorksGSHooks::LogOnAnonymous(void)
 	this->pFOTR->PushCell(sizeof(pToken));
 	this->pFOTR->Execute(NULL);
 
-	pGameServer->LogOn(pToken, pToken);
+	pGameServer->LogOn(pToken);
 	RETURN_META(MRES_SUPERCEDE);
 }
 
