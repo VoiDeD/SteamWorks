@@ -77,7 +77,7 @@ CSteamID SteamWorks::CreateCommonCSteamID(IGamePlayer *pPlayer, const cell_t *pa
 	EUniverse universe = k_EUniversePublic;
 	EAccountType type = k_EAccountTypeIndividual;
 	
-	const char *pAuth = pPlayer->GetAuthString(false); /* We're not using this for Auth. */
+	const char *pAuth = pPlayer->GetSteam2Id(false); /* We're not using this for Auth. */
 	if (pAuth == NULL || pAuth[0] == '\0' || strlen(pAuth) < 11 || pAuth[6] == 'I')
 	{
 		return this->CreateCommonCSteamID(pPlayer->GetSteamAccountID(false), params, universeplace, typeplace);
